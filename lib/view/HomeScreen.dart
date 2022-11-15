@@ -145,7 +145,7 @@ class _homeScreenState extends State<homeScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide.none),
-                        hintText: 'Search',
+                        hintText: 'Search Customer',
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
                         prefixIcon: Container(
                           padding: EdgeInsets.all(15),
