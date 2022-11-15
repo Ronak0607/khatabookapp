@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:khatabookapp/controller/HomeController.dart';
 import 'package:khatabookapp/view/ProductPage.dart';
+import 'package:khatabookapp/view/ctedit_screen.dart';
+import 'package:khatabookapp/view/debit_screen.dart';
+
+import '../dbHelper.dart';
 
 class customerDetails extends StatefulWidget {
   const customerDetails({Key? key}) : super(key: key);
@@ -11,6 +16,20 @@ class customerDetails extends StatefulWidget {
 }
 
 class _customerDetailsState extends State<customerDetails> {
+  HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
+
+  Future<void> getdata() async {
+    DbHelper db = DbHelper();
+    homeController!.productList.value =
+        await db.readProductData(homeController!.homeModel!.id!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -150,9 +169,6 @@ class _customerDetailsState extends State<customerDetails> {
                             fontWeight: FontWeight.bold,
                             color: Color(0xff868686)),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
                       Text(
                         "Remark",
                         style: TextStyle(
@@ -168,98 +184,115 @@ class _customerDetailsState extends State<customerDetails> {
                     ]),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(2, 2),
-                        blurRadius: 12,
-                        color: Color(0x1d000000))
-                  ],
-                ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                    itemCount: homeController!.productList.value.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "2-11-2022",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff000000)),
-                              ),
-                              Text(
-                                "12:00",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff000000)),
-                              ),
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: Offset(2, 2),
+                                  blurRadius: 12,
+                                  color: Color(0x1d000000))
                             ],
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        width: 60,
-                        height: double.infinity,
-                        child: Center(
-                          child: Text(
-                            "dd",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff000000)),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              height: double.infinity,
-                              width: 70,
-                              color: Color(0xffdcfff9),
-                              child: Center(
-                                child: Text("\u{20B9} 100",style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff0b9e84),
-                                ),),
-                              ),
-                            ),
-                            Container(
-                              height: double.infinity,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffffe9ec),
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(8),
-                                      bottomRight: Radius.circular(8))),
-                              child: Center(
-                                child: Text(
-                                  "\u{20B9} 100",
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xffdf2f3a),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${DateTime.now().day}"
+                                          "/"
+                                          "${DateTime.now().month}"
+                                          "/"
+                                          "${DateTime.now().year}"
+                                          "",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff000000)),
+                                        ),
+                                        Text(
+                                          "${DateTime.now().hour}"
+                                          ":"
+                                          "${DateTime.now().minute}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff000000)),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                                Container(
+                                  width: 100,
+                                  height: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      "${homeController!.productList.value[index]['productNAME']}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff000000)),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: double.infinity,
+                                        width: 70,
+                                        color: Color(0xffffe9ec),
+                                        child: Center(
+                                          child: Text(
+                                            "\u{20B9} ${homeController!.productList.value[index]['paymentSTATUS'] == 1 ? '0' : '${homeController!.productList.value[index]['productPRICE']}'}",
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xffdf2f3a),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: double.infinity,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xffdcfff9),
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(8),
+                                                bottomRight:
+                                                    Radius.circular(8))),
+                                        child: Center(
+                                          child: Text(
+                                            "\u{20B9} ${homeController!.productList.value[index]['paymentSTATUS'] == 0 ? ' 0 ' : '${homeController!.productList.value[index]['productPRICE']}'}",
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff0b9e84),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ]),
                         ),
-                      )
-                    ]),
+                      );
+                    }),
               ),
             )
           ],
@@ -273,8 +306,8 @@ class _customerDetailsState extends State<customerDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
-                  onTap: (){
-                    Get.to(productPase());
+                  onTap: () {
+                    Get.to(debitScreen());
                   },
                   child: Container(
                     height: 50,
@@ -294,8 +327,8 @@ class _customerDetailsState extends State<customerDetails> {
                   ),
                 ),
                 InkWell(
-                  onTap: (){
-                    Get.to(productPase());
+                  onTap: () {
+                    Get.to(creditScreen());
                   },
                   child: Container(
                     height: 50,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:khatabookapp/Model/HomeModel.dart';
 import 'package:khatabookapp/view/CustomerDetails.dart';
 
 import '../controller/HomeController.dart';
@@ -32,7 +33,7 @@ class _homeScreenState extends State<homeScreen> {
 
   Future<void> getdata() async {
     DbHelper db = DbHelper();
-    homeController.stdList.value = await db.readData();
+    homeController.clientList.value = await db.readData();
   }
 
   Widget build(BuildContext context) {
@@ -161,7 +162,7 @@ class _homeScreenState extends State<homeScreen> {
             Obx(
               () => Expanded(
                 child: ListView.builder(
-                    itemCount: homeController.stdList.value.length,
+                    itemCount: homeController.clientList.value.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -179,9 +180,9 @@ class _homeScreenState extends State<homeScreen> {
                             leading: Image.network(
                                 "https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"),
                             title: Text(
-                                "${homeController.stdList.value[index]['name']}"),
+                                "${homeController.clientList.value[index]['name']}"),
                             subtitle: Text(
-                                "${homeController.stdList.value[index]['mobile']}"),
+                                "${homeController.clientList.value[index]['mobile']}"),
                             trailing: SizedBox(
                               width: 100,
                               child: Row(
@@ -190,7 +191,7 @@ class _homeScreenState extends State<homeScreen> {
                                     onPressed: () {
                                       DbHelper db = DbHelper();
                                       db.deleteData(
-                                          '${homeController.stdList.value[index]['id']}');
+                                          '${homeController.clientList.value[index]['id']}');
                                       getdata();
                                     },
                                     icon: Icon(Icons.delete),
@@ -199,13 +200,13 @@ class _homeScreenState extends State<homeScreen> {
                                       onPressed: () {
                                         utxtName = TextEditingController(
                                             text:
-                                                "${homeController.stdList.value[index]['name']}");
+                                                "${homeController.clientList.value[index]['name']}");
                                         utxtMobile = TextEditingController(
                                             text:
-                                                "${homeController.stdList.value[index]['mobile']}");
+                                                "${homeController.clientList.value[index]['mobile']}");
                                         utxtAdd = TextEditingController(
                                             text:
-                                                "${homeController.stdList.value[index]['Address']}");
+                                                "${homeController.clientList.value[index]['Address']}");
                                         Get.defaultDialog(
                                             content: Column(
                                           children: [
@@ -228,7 +229,7 @@ class _homeScreenState extends State<homeScreen> {
                                                 onPressed: () {
                                                   DbHelper db = DbHelper();
                                                   db.updateData(
-                                                      '${homeController.stdList.value[index]['id']}',
+                                                      '${homeController.clientList.value[index]['id']}',
                                                       utxtName.text,
                                                       utxtMobile.text,
                                                       utxtAdd.text);
@@ -243,6 +244,15 @@ class _homeScreenState extends State<homeScreen> {
                               ),
                             ),
                             onTap: () {
+
+                              homeController!.homeModel =HomeModel(
+                                id:homeController!.clientList.value[index]['id'].toString(),
+                                Address: homeController!.clientList.value[index]['Address'],
+                                mobile: homeController!.clientList.value[index]['mobile'],
+                                name: homeController!.clientList.value[index]['name'],
+                              );
+
+
                               Get.to(customerDetails());
                             },
                           ),
