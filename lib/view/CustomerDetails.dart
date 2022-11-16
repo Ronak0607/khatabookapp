@@ -83,12 +83,14 @@ class _customerDetailsState extends State<customerDetails> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     )),
-                                Text(
-                                  "\u{20B9} 100",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff0b9e84),
+                                Obx(
+                                  () =>  Text(
+                                    "\u{20B9} ${homeController!.totalsum}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff0b9e84),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -105,12 +107,14 @@ class _customerDetailsState extends State<customerDetails> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     )),
-                                Text(
-                                  "\u{20B9} 0",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xffdf2f3a),
+                                Obx(
+                                  () =>  Text(
+                                    "\u{20B9} ${homeController.pendingsum}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xffdf2f3a),
+                                    ),
                                   ),
                                 ),
                               ],

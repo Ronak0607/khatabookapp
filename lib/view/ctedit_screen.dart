@@ -48,94 +48,99 @@ class _creditScreenState extends State<creditScreen> {
             title: Text("Product Details"),
           ),
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtproductname,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Product Name"),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtproductquantity,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Product Quantity"),
+                  TextField(
+                    controller: txtproductname,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Product Name"),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtproductprice,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Product Price"),
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtcurrentdate,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Current Date"),
+                  TextField(
+                    controller: txtproductquantity,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Product Quantity"),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtcurrenttime,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Current time"),
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtduedate,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Due date"),
+                  TextField(
+                    controller: txtproductprice,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Product Price"),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: txtpatmenttype,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Payment type"),
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
+                  TextField(
+                    controller: txtcurrentdate,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Current Date"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: txtcurrenttime,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Current time"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: txtduedate,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Due date"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    controller: txtpatmenttype,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Payment type"),
+                    ),
+                  ),
 
-                SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      DbHelper db=DbHelper();
-                      db.insertProductData(txtproductname.text, txtproductquantity.text, txtproductprice.text, txtcurrentdate.text, 1, txtduedate.text, txtpatmenttype.text, homeController!.homeModel!.id!);
-                      getdata();
-                      Get.back();
-                    },
-                    child: Text(
-                      "CREDIT",
-                      style: TextStyle(fontSize: 20),
-                    ))
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        DbHelper db=DbHelper();
+                        db.insertProductData(txtproductname.text, txtproductquantity.text, txtproductprice.text, txtcurrentdate.text, 1, txtduedate.text, txtpatmenttype.text, homeController!.homeModel!.id!);
+                        getdata();
+
+                        Get.back();
+                        homeController!.totalpl();
+                      },
+                      child: Text(
+                        "CREDIT",
+                        style: TextStyle(fontSize: 20),
+                      ))
+                ],
+              ),
             ),
           ),
 

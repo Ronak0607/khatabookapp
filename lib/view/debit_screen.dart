@@ -129,7 +129,9 @@ HomeController homeController = Get.put(HomeController());
                           DbHelper db=DbHelper();
                           db.insertProductData(txtproductname.text, txtproductquantity.text, txtproductprice.text, txtcurrentdate.text, 0, txtduedate.text, txtpatmenttype.text, homeController!.homeModel!.id!);
                           getdata();
+
                           Get.back();
+                          homeController!.totalpl();
                         },
                         child: Text(
                           "DEBIT",
